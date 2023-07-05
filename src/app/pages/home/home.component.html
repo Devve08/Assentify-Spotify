@@ -1,0 +1,50 @@
+<div class="w-full flex flex-col items-center justify-start">
+  <div
+    class="w-full bg-green-300 h-20 flex flex-row justify-between items-center"
+  >
+    <div class="flex flex-row p-4 gap-4 relative items-center justify-start">
+      <img src="../../../assets/images/spotify.png" class="h-8 w-8" alt="" />
+      <span class="font-semibold text-black text-2xl"> Spotify </span>
+    </div>
+    <div>
+      <span
+        (click)="logoutAction()"
+        class="text-black text-xl font-medium cursor-pointer p-4 hover:opacity-50"
+        >Logout</span
+      >
+      <span class="text-black text-xl font-medium cursor-pointer p-4">Register</span>
+    </div>
+  </div>
+  <div
+    class="border px-6 pr-8 py-2 my-8 w-80 flex flex-row items-center rounded relative"
+  >
+    <input
+      #input
+      class="outline-none w-full"
+      type="search"
+      (ngModelChange)="handleLoading()"
+      [(ngModel)]="searchQuery"
+      placeholder="Search for an artist..."
+    />
+    <img
+      src="../../../assets/images/search.png"
+      class="h-4 w-4 absolute right-2 cursor-pointer"
+      alt=""
+    />
+  </div>
+  <app-loading *ngIf="isLoading"></app-loading>
+  <div
+    *ngIf="!isLoading && artists?.length > 0"
+    class="w-full flex flex-row items-center justify-center flex-wrap p-8"
+  >
+    <div *ngFor="let artist of artists">
+      <app-artist-card
+        [followers]="artist?.followers?.total"
+        [image]="artist.images[0]?.url"
+        [name]="artist.name"
+        [rating]="artist?.popularity"
+        [id]="artist.id"
+      ></app-artist-card>
+    </div>
+  </div>
+</div>

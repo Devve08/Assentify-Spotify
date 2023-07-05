@@ -1,0 +1,18 @@
+<div class="w-56 h-96 flex flex-col m-4 border-2 bg-gray-200">
+  <img src="{{ image }}" class="w-full h-2/4" />
+  <div class="w-full p-2 flex flex-col justify-between items-start h-2/4">
+    <div class="w-full">
+      <div class="font-semibold text-md">{{ album_title }}</div>
+    </div>
+    <div>
+      <div>{{release_year}}</div>
+      <div>Tracks: {{number_of_tracks}}</div>
+    </div>
+  </div>
+  <a
+    href="{{link}}"
+    class="w-full flex flex-row justify-center items-center border-2 p-1 border-gray-400 hover:bg-gray-400"
+  >
+    Preview on Spotify
+  </a>
+</div>
