@@ -13,10 +13,27 @@ import { HomeComponent } from './pages/home/home.component';
 import { ArtistCardComponent } from './components/artist-card/artist-card.component';
 import { AlbumsComponent } from './pages/albums/albums.component';
 import { AlbumCardComponent } from './components/album-card/album-card.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
-  declarations: [AppComponent, LoadingComponent, LoginComponent, HomeComponent, ArtistCardComponent, AlbumsComponent, AlbumCardComponent],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  declarations: [
+    AppComponent,
+    LoadingComponent,
+    LoginComponent,
+    HomeComponent,
+    ArtistCardComponent,
+    AlbumsComponent,
+    AlbumCardComponent,
+    RegisterComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+  ],
   providers: [SpotifyService, AuthGuardServiceService],
   bootstrap: [AppComponent],
 })

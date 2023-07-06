@@ -1,0 +1,336 @@
+<form
+  [formGroup]="artistForm"
+  (ngSubmit)="saveArtist()"
+  class="max-w-md mx-auto"
+>
+  <!-- Artist Personal Information -->
+  <h2 class="text-xl font-bold mb-4">Artist Personal Information</h2>
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <label for="firstName" class="block"
+        >First Name<span class="text-red-500">*</span></label
+      >
+      <input
+        type="text"
+        id="firstName"
+        formControlName="firstName"
+        class="border border-gray-300 rounded-md px-3 py-2 w-full"
+        [class.border-red-500]="
+          artistForm.get('firstName')?.invalid &&
+          (artistForm.get('firstName')?.dirty ||
+            artistForm.get('firstName')?.touched)
+        "
+      />
+      <div
+        *ngIf="
+          artistForm.get('firstName')?.invalid &&
+          (artistForm.get('firstName')?.dirty ||
+            artistForm.get('firstName')?.touched)
+        "
+        class="text-red-500"
+      >
+        <div *ngIf="artistForm.get('firstName')?.hasError('required')">
+          First Name is required.
+        </div>
+        <div *ngIf="artistForm.get('firstName')?.hasError('minlength')">
+          First Name must be at least 3 characters.
+        </div>
+      </div>
+    </div>
+    <div>
+      <label for="lastName" class="block"
+        >Last Name<span class="text-red-500">*</span></label
+      >
+      <input
+        type="text"
+        id="lastName"
+        formControlName="lastName"
+        class="border border-gray-300 rounded-md px-3 py-2 w-full"
+      />
+      <div
+        *ngIf="
+          artistForm.get('lastName')?.invalid &&
+          (artistForm.get('lastName')?.dirty ||
+            artistForm.get('lastName')?.touched)
+        "
+        class="text-red-500"
+      >
+        <div *ngIf="artistForm.get('lastName')?.hasError('required')">
+          Last Name is required.
+        </div>
+        <div *ngIf="artistForm.get('lastName')?.hasError('minlength')">
+          Last Name must be at least 3 characters.
+        </div>
+      </div>
+    </div>
+    <div>
+      <label for="dateOfBirth" class="block"
+        >Date of Birth<span class="text-red-500">*</span></label
+      >
+      <input
+        type="date"
+        id="dateOfBirth"
+        formControlName="dateOfBirth"
+        class="border border-gray-300 rounded-md px-3 py-2 w-full"
+      />
+      <div
+        *ngIf="
+          artistForm.get('dateOfBirth')?.invalid &&
+          (artistForm.get('dateOfBirth')?.dirty ||
+            artistForm.get('dateOfBirth')?.touched)
+        "
+        class="text-red-500"
+      >
+        <div *ngIf="artistForm.get('dateOfBirth')?.hasError('required')">
+          Date of Birth is required.
+        </div>
+        <div *ngIf="artistForm.get('dateOfBirth')?.hasError('minAge')">
+          Minimum age requirement is 25.
+        </div>
+      </div>
+    </div>
+    <div>
+      <label for="email" class="block"
+        >Email<span class="text-red-500">*</span></label
+      >
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="border border-gray-300 rounded-md px-3 py-2 w-full"
+      />
+      <div
+        *ngIf="
+          artistForm.get('email')?.invalid &&
+          (artistForm.get('email')?.dirty || artistForm.get('email')?.touched)
+        "
+        class="text-red-500"
+      >
+        <div *ngIf="artistForm.get('email')?.hasError('required')">
+          Email is required.
+        </div>
+        <div *ngIf="artistForm.get('email')?.hasError('email')">
+          Invalid email format.
+        </div>
+      </div>
+    </div>
+    <div>
+      <label for="phoneNumber" class="block"
+        >Phone Number<span class="text-red-500">*</span></label
+      >
+      <input
+        type="text"
+        id="phoneNumber"
+        formControlName="phoneNumber"
+        class="border border-gray-300 rounded-md px-3 py-2 w-full"
+      />
+      <div
+        *ngIf="
+          artistForm.get('phoneNumber')?.invalid &&
+          (artistForm.get('phoneNumber')?.dirty ||
+            artistForm.get('phoneNumber')?.touched)
+        "
+        class="text-red-500"
+      >
+        <div *ngIf="artistForm.get('phoneNumber')?.hasError('required')">
+          Phone Number is required.
+        </div>
+        <div *ngIf="artistForm.get('phoneNumber')?.hasError('pattern')">
+          Invalid phone number format.
+        </div>
+      </div>
+    </div>
+    <div>
+      <label for="profilePicture" class="block"
+        >Profile Picture<span class="text-red-500">*</span></label
+      >
+      <input
+        type="file"
+        id="profilePicture"
+        formControlName="profilePicture"
+        class="border border-gray-300 rounded-md px-3 py-2 w-full"
+      />
+      <div
+        *ngIf="
+          artistForm.get('profilePicture')?.invalid &&
+          (artistForm.get('profilePicture')?.dirty ||
+            artistForm.get('profilePicture')?.touched)
+        "
+        class="text-red-500"
+      >
+        <div *ngIf="artistForm.get('profilePicture')?.hasError('required')">
+          Profile Picture is required.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Additional Artist Information -->
+
+  <h2 class="text-xl font-bold my-4">Additional Artist Information</h2>
+  <div>
+    <label for="stageName" class="block">Stage Name</label>
+    <input
+      type="text"
+      id="stageName"
+      formControlName="stageName"
+      class="border border-gray-300 rounded-md px-3 py-2 w-full"
+    />
+  </div>
+  <div>
+    <label for="artistBackstory" class="block">Artist Backstory</label>
+    <textarea
+      id="artistBackstory"
+      formControlName="artistBackstory"
+      class="border border-gray-300 rounded-md px-3 py-2 w-full"
+    ></textarea>
+  </div>
+  <div>
+    <label for="startingDate" class="block">Starting Date</label>
+    <input
+      type="date"
+      id="startingDate"
+      formControlName="startingDate"
+      class="border border-gray-300 rounded-md px-3 py-2 w-full"
+    />
+  </div>
+
+  <!-- Albums -->
+  <h2 class="text-xl font-bold my-4">Albums</h2>
+  <div formArrayName="albums">
+    <div
+      *ngFor="let album of albumsControls.controls; let albumIndex = index"
+      class="p-4 border border-gray-200 rounded-lg"
+    >
+      <div [formGroupName]="albumIndex">
+        <h3 class="text-lg font-bold mb-2">Album {{ albumIndex + 1 }}</h3>
+
+        <div class="flex space-x-4 mb-4">
+          <div class="flex-1">
+            <label for="picture{{ albumIndex }}">Picture</label>
+            <input
+              type="text"
+              id="picture{{ albumIndex }}"
+              class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              formControlName="picture"
+            />
+            <div
+              *ngIf="
+                albumsControls.at(albumIndex).get('picture')?.invalid &&
+                albumsControls.at(albumIndex).get('picture')?.touched
+              "
+              class="text-red-500 mt-1"
+            >
+              Picture is required
+            </div>
+          </div>
+
+          <div class="flex-1">
+            <label for="date{{ albumIndex }}">Date</label>
+            <input
+              type="text"
+              id="date{{ albumIndex }}"
+              class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+              formControlName="date"
+            />
+            <div
+              *ngIf="
+                albumsControls.at(albumIndex).get('date')?.invalid &&
+                albumsControls.at(albumIndex).get('date')?.touched
+              "
+              class="text-red-500 mt-1"
+            >
+              Date is required
+            </div>
+          </div>
+        </div>
+
+        <h4 class="text-md font-bold mb-2">Songs</h4>
+
+        <div formArrayName="songs">
+          <div
+            *ngFor="let song of songsAtIndex(albumIndex); let songIndex = index"
+            class="flex space-x-4"
+          >
+            <div [formGroupName]="songIndex" class="flex-1">
+              <div class="mb-2">
+                <label for="name{{ albumIndex }}{{ songIndex }}">Name</label>
+                <input
+                  type="text"
+                  id="name{{ albumIndex }}{{ songIndex }}"
+                  class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  formControlName="name"
+                />
+                <div class="text-red-500 mt-1">Name is required</div>
+              </div>
+
+              <div>
+                <label for="duration{{ albumIndex }}{{ songIndex }}"
+                  >Duration</label
+                >
+                <input
+                  type="text"
+                  id="duration{{ albumIndex }}{{ songIndex }}"
+                  class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  formControlName="duration"
+                />
+                <div class="text-red-500 mt-1">Duration is required</div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="flex items-center justify-center bg-red-500 text-white rounded-lg px-2 py-2"
+              (click)="removeSong(albumIndex, songIndex)"
+            >
+              <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                <path
+                  fill-rule="evenodd"
+                  d="M15 10a5 5 0 11-10 0 5 5 0 0110 0zm1 0a6 6 0 11-12 0 6 6 0 0112 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <button
+          type="button"
+          class="bg-green-500 text-white rounded-lg px-4 py-2"
+          (click)="addSong(albumIndex)"
+        >
+          Add Song
+        </button>
+      </div>
+      <button
+        type="button"
+        class="mt-4 bg-red-500 text-white rounded-lg px-4 py-2"
+        (click)="removeAlbum(albumIndex)"
+      >
+        Remove Album
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button
+      type="button"
+      class="bg-blue-500 text-white rounded-lg px-4 py-2"
+      (click)="addAlbum()"
+    >
+      Add Album
+    </button>
+  </div>
+
+  <!-- Submit Button -->
+  <button
+    type="submit"
+    [disabled]="artistForm.invalid"
+    class="btn btn-primary mt-4"
+  >
+    Register
+  </button>
+</form>
