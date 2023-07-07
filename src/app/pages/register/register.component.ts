@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store, createState, withProps } from '@ngneat/elf';
-import { ArtistsRepository } from 'src/store/artists.repositry';
+import { HelpersService } from 'src/app/services/helpers.service';
+import { ArtistsRepository } from 'src/store/artists.repository';
 
 @Component({
   selector: 'app-register',
@@ -11,11 +12,11 @@ import { ArtistsRepository } from 'src/store/artists.repositry';
 export class RegisterComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
-    private _artistRepo: ArtistsRepository
+    private _artistRepo: ArtistsRepository,
+    private _helperService: HelpersService
   ) {}
   artistForm!: FormGroup;
   selectedArtistImage: any;
-  
 
   ngOnInit(): void {
     this.artistForm = this._fb.group({
@@ -67,14 +68,13 @@ export class RegisterComponent implements OnInit {
         let reader = new FileReader();
         reader.readAsDataURL(event.target.files[0]);
         reader.onload = (_event) => {
-       
           this.albumsControls.controls[albumIndex].patchValue({
             pictureSource: event.target.files[0],
             pictureName: reader.result,
           });
         };
       }
-    } 
+    }
   }
 
   // Get albums array
@@ -144,19 +144,15 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  // Log the registered artist model 
+  //Elf NgNeat state management
+  // Log the registered artist model
   saveArtist() {
     this._artistRepo.addArtist({
       ...this.artistForm.value,
-      id: this.generateId(),
+      id: this._helperService.generateId(),
     });
-    this._artistRepo.artists$.subscribe((artists) => console.log('Ngneat store',artists));
-  }
-
-  //Get date for ID
-  generateId() {
-    let date = new Date();
-    let id = date.getTime();
-    return id;
+    this._artistRepo.artists$.subscribe((artists) =>
+      console.log('Ngneat store', artists)
+    );
   }
 }

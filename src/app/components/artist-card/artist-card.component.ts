@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { HelpersService } from 'src/app/services/helpers.service';
 
 @Component({
   selector: 'app-artist-card',
@@ -12,8 +13,18 @@ export class ArtistCardComponent implements OnInit {
   @Input() name: string = '';
   @Input() rating: number = 0;
   @Input() id: string = '';
+  starsRating: any;
 
-  constructor() {}
+  constructor(private _helpers: HelpersService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.starsRating = Array(
+      Math.floor(this._helpers.prepareRating(this.rating))
+    ).map((x, i) => i);
+  }
+
+  //Check if rating is an integer to use the half star
+  isInteger(number: number): boolean {
+    return this._helpers.prepareRating(number) % 1 === 0 ?? false;
+  }
 }
