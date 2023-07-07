@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store, createState, withProps } from '@ngneat/elf';
+import { ArtistsRepository } from 'src/store/artists.repositry';
 
 @Component({
   selector: 'app-register',
@@ -7,8 +9,13 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  constructor(private _fb: FormBuilder) {}
+  constructor(
+    private _fb: FormBuilder,
+    private _artistRepo: ArtistsRepository
+  ) {}
   artistForm!: FormGroup;
+  selectedArtistImage: any;
+  
 
   ngOnInit(): void {
     this.artistForm = this._fb.group({
@@ -21,12 +28,56 @@ export class RegisterComponent implements OnInit {
         [Validators.required, Validators.pattern('^[0-9]{8}$')],
       ],
       profilePicture: ['', Validators.required],
+      profileSource: [null],
       stageName: '',
       artistBackstory: '',
       startingDate: '',
       albums: this._fb.array([]),
     });
   }
+
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      let mimeType = event.target.files[0].type;
+      if (mimeType.match(/image\/*/) == null) {
+        alert('This field can only accept images');
+        return;
+      } else {
+        let reader = new FileReader();
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onload = (_event) => {
+          this.selectedArtistImage = reader.result;
+          this.artistForm.patchValue({
+            profileSource: event.target.files[0],
+          });
+        };
+      }
+    } else {
+      this.selectedArtistImage = null;
+    }
+  }
+
+  onAlbumFileSelected(event: any, albumIndex: any) {
+    if (event.target.files.length > 0) {
+      let mimeType = event.target.files[0].type;
+      if (mimeType.match(/image\/*/) == null) {
+        alert('This field can only accept images');
+        return;
+      } else {
+        let reader = new FileReader();
+        reader.readAsDataURL(event.target.files[0]);
+        reader.onload = (_event) => {
+       
+          this.albumsControls.controls[albumIndex].patchValue({
+            pictureSource: event.target.files[0],
+            pictureName: reader.result,
+          });
+        };
+      }
+    } 
+  }
+
+  // Get albums array
 
   get albumsControls() {
     return <FormArray>this.artistForm.get('albums');
@@ -50,6 +101,8 @@ export class RegisterComponent implements OnInit {
   addAlbum() {
     const albumGroup = this._fb.group({
       picture: ['', Validators.required],
+      pictureSource: [''],
+      pictureName: [''],
       date: ['', Validators.required],
       songs: this._fb.array([]),
     });
@@ -62,6 +115,7 @@ export class RegisterComponent implements OnInit {
     this.albumsControls.removeAt(index);
   }
 
+  // Get songs from album
   get songs(): FormArray {
     return this.albumsControls.get('songs') as FormArray;
   }
@@ -90,8 +144,19 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  // Log the registered artist model
+  // Log the registered artist model 
   saveArtist() {
-    console.log(this.artistForm.value);
+    this._artistRepo.addArtist({
+      ...this.artistForm.value,
+      id: this.generateId(),
+    });
+    this._artistRepo.artists$.subscribe((artists) => console.log('Ngneat store',artists));
+  }
+
+  //Get date for ID
+  generateId() {
+    let date = new Date();
+    let id = date.getTime();
+    return id;
   }
 }

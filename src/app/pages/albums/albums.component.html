@@ -3,7 +3,7 @@
       <div class="text-xl font-semibold">{{artistAlbums[0]?.artists[0]?.name}}</div>
       <div class="text-lg text-gray-400 font-semibold">Albums</div>
     </div>
-    <div class="w-full flex flex-row flex-wrap items-center py-8">
+    <div class="w-full flex flex-row flex-wrap items-center justify-center py-8">
       <div *ngFor="let album of artistAlbums">
         <app-album-card
         [album_title]="album?.name"

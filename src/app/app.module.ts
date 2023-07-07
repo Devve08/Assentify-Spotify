@@ -15,6 +15,7 @@ import { AlbumsComponent } from './pages/albums/albums.component';
 import { AlbumCardComponent } from './components/album-card/album-card.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './pages/register/register.component';
+import { NgxStarRatingModule } from 'ngx-star-rating'
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { RegisterComponent } from './pages/register/register.component';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    NgxStarRatingModule
   ],
   providers: [SpotifyService, AuthGuardServiceService],
   bootstrap: [AppComponent],
